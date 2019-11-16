@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT -Dspring.profiles.active=prod $JAVA_OPTS -jar target/cart-service*.jar
+web: java -Dserver.port=$PORT -Dspring.profiles.active=prod
