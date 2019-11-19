@@ -3,4 +3,4 @@ Management shopping cart
 
 ### Swagger UI
 
-url: http://localhost:8090/swagger-ui.html
+url: http://localhost:8090/api/v1/swagger-ui.html
