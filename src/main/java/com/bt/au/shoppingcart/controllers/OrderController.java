@@ -42,6 +42,14 @@ public class OrderController {
         return cartRepository.save(shoppingCart);
     }
 
+    @PostMapping(path = "/add-item/{cartId}")
+    public ShoppingCart addItem(@PathVariable("cartId") long cartId, @RequestBody ItemCart item) {
+
+
+
+        return cartService.addItemToCart(cartId, item);
+    }
+
     @PostMapping(path = "/add-items/{cartId}")
     public ShoppingCart addItems(@PathVariable("cartId") long cartId, @RequestBody Set<ItemCart> items) {
         return cartService.addItemToCart(cartId, items);

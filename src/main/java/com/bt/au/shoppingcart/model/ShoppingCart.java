@@ -18,6 +18,10 @@ public class ShoppingCart extends PersistenceDomainObject {
         this.itemsCart = itemsCart;
     }
 
+    public Set<ItemCart> getItemsCart() {
+        return itemsCart;
+    }
+
     public boolean addItemCart(ItemCart itemCart) {
         return this.itemsCart.add(itemCart);
      }

@@ -1,10 +1,12 @@
 package com.bt.au.shoppingcart.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 @Entity
 public class ItemCart extends PersistenceDomainObject {
@@ -13,6 +15,10 @@ public class ItemCart extends PersistenceDomainObject {
     private Product product;
 
     private int quantity;
+
+    @Transient
+    @JsonProperty("product_id")
+    private long productId;
 
     @ManyToOne
     @JoinColumn
@@ -50,5 +56,13 @@ public class ItemCart extends PersistenceDomainObject {
 
     public void setShoppingCart(ShoppingCart shoppingCart) {
         this.shoppingCart = shoppingCart;
+    }
+
+    public long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(long productId) {
+        this.productId = productId;
     }
 }

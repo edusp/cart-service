@@ -29,6 +29,7 @@ public class ProductController {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @CrossOrigin(origins = "*")
     public List<Product> list(@PathParam("page") Pageable page) {
         return productRepository.findAll(page).getContent();
     }
