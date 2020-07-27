@@ -1,5 +1,6 @@
 package com.bt.au.shoppingcart.controllers;
 
+import com.bt.au.shoppingcart.model.wit.IntentAI;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +14,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
-@CrossOrigin(origins = "*")
+
 @RestController
 @RequestMapping("wit")
 public class WitController {
@@ -29,8 +30,13 @@ public class WitController {
     @Value("${endpoint}")
     private String endpoint;
 
+    public WitController() {
+        System.out.println("");
+    }
+
+    @CrossOrigin(origins = "*")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> wit(@RequestParam("msg") String msg) throws UnsupportedEncodingException {
+    public ResponseEntity<IntentAI> wit(@RequestParam("msg") String msg) throws UnsupportedEncodingException {
 
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
@@ -40,21 +46,29 @@ public class WitController {
         msg = URLEncoder.encode(msg, StandardCharsets.UTF_8.toString());
         HttpEntity entity = new HttpEntity(headers);
 
-        ResponseEntity<String> response = restTemplate.exchange(endpoint + msg, HttpMethod.GET, entity, String.class);
+        ResponseEntity<IntentAI> responseEntity = restTemplate.exchange(endpoint + msg, HttpMethod.GET, entity,
+                IntentAI.class);
 
-        String body = response.getBody();
+       // buildResponse(new JSONObject(responseEntity.getBody()));
 
-        JSONObject jsonObject = new JSONObject(body);
+
+
+
+        JSONObject jsonObject = new JSONObject(responseEntity.getBody());
+        LOGGER.info("RESPONSE {}", responseEntity.getBody());
+
+        return ResponseEntity.ok().body(responseEntity.getBody());
+    }
+
+
+    private String buildResponse(JSONObject jsonObject) {
+
         Map<String, String> mapEntities = (Map)jsonObject.toMap().get("entities");
 
-        Map<String, String> entities = (Map)jsonObject.toMap().get("entities");
+        LOGGER.info("STORAGE {}", mapEntities.get(STORAGE_KEY));
+        LOGGER.info("MODEL {}", mapEntities.get(MODEL_KEY));
+        LOGGER.info("ENTITIES {}", mapEntities);
 
-        LOGGER.info("STORAGE {}", entities.get(STORAGE_KEY));
-        LOGGER.info("MODEL {}", entities.get(MODEL_KEY));
-        LOGGER.info("ENTITIES {}", entities);
-
-        return response;
-
-
+        return null;
     }
 }
