@@ -21,6 +21,8 @@ import java.util.Set;
 @RequestMapping("orders")
 public class OrderController {
 
+    private static List<String> msgs = new ArrayList<>();
+    
     private OrderRepository orderRepository;
 
     private ShoppingCartRepository cartRepository;
@@ -72,7 +74,13 @@ public class OrderController {
     }
     
     @GetMapping(path= "send/{msg}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String atack(@PathVariable("msg") String msg) {
-        return msg;
+    public void atack(@PathVariable("msg") String msg) {
+        msgs.add(msg);
     }
+    
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<String> list() {
+        return msgs;
+    }
+    
 }
