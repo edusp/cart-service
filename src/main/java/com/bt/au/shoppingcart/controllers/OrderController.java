@@ -79,7 +79,7 @@ public class OrderController {
         msgs.add(msg);
     }
     
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "msgs", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<String> list() {
         return msgs;
     }
