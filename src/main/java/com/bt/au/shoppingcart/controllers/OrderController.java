@@ -70,4 +70,9 @@ public class OrderController {
     public List<Order> list(@PathParam("page") Pageable page) {
         return orderRepository.findAll(page).getContent();
     }
+    
+    @GetMapping(path= "send/{msg}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String atack(@PathVariable("msg") String msg) {
+        return msg;
+    }
 }
